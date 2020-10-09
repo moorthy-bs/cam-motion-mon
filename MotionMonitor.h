@@ -36,7 +36,7 @@ namespace WPEFramework {
         // As the registration/unregistration of notifications is realized by the class PluginHost::JSONRPC,
         // this class exposes a public method called, Notify(), using this methods, all subscribed clients
         // will receive a JSONRPC message as a notification, in case this method is called.
-        class CamMotionMonitor : public CamMotionMonitorInterface, public PluginHost::IPlugin, public PluginHost::JSONRPC {
+        class CamMotionMonitor : public PluginHost::IPlugin, public PluginHost::JSONRPC {
         public:
             CamMotionMonitor();
             virtual ~CamMotionMonitor();
@@ -44,11 +44,11 @@ namespace WPEFramework {
             CamMotionMonitor& operator=(const CamMotionMonitor&) = delete;
 
             //Begin methods
-            virtual uint32_t sendPath(const JsonObject& parameters, JsonObject& response) const override;
+            virtual uint32_t sendPath(const JsonObject& parameters, JsonObject& response);
             //End methods
 
             //Begin events
-            virtual void onMotionCaptured(const std::string &url) override;
+            virtual void onMotionCaptured(std::string &url);
             //End events
 
             //Build QueryInterface implementation, specifying all possible interfaces to be returned.

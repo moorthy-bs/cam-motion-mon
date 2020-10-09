@@ -18,7 +18,7 @@
 **/
 
 #include "MotionMonitor.h"
-#include "utils.h"
+#include "Utils.h"
 
 namespace {
     using WPEFramework::Plugin::CamMotionMonitor;
@@ -41,12 +41,16 @@ namespace WPEFramework
 
         CamMotionMonitor::CamMotionMonitor()
         : PluginHost::JSONRPC(),
-          apiVersionNumber(1),
+          apiVersionNumber(1)
         {
+            for(const auto &mapping: mutableMethods)
+                Register(mapping.first, mapping.second, this);
         }
 
         CamMotionMonitor::~CamMotionMonitor()
         {
+            for(const auto &mapping: mutableMethods)
+                Unregister(mapping.first);
         }
 
         const string CamMotionMonitor::Initialize(PluginHost::IShell* service)
@@ -82,12 +86,12 @@ namespace WPEFramework
         }
 
         // ###### Method Implementation ######
-        uint32_t CamMotionMonitor::sendPath(const JsonObject& parameters, JsonObject& response) const
+        uint32_t CamMotionMonitor::sendPath(const JsonObject& parameters, JsonObject& response)
         {
             LOGINFOMETHOD();
 
-            m_ipAddress = parameters["ipaddress"];
-            m_imagePath = parameters["imagepath"];
+            m_ipAddress = parameters["ipaddress"].String();
+            m_imagePath = parameters["imagepath"].String();
 
             LOGTRACEMETHODFIN();
             returnResponse(true);
@@ -98,14 +102,19 @@ namespace WPEFramework
          *
          * \param url http url of the image file.
          */
-        void CamMotionMonitor::onMotionCaptured(const string &url)
+        void CamMotionMonitor::onMotionCaptured(string &url)
         {
             JsonObject params;
             
-            url = "http://" + m_ipAddress + "/" + m_imagePath;
+            url = string("http://") + m_ipAddress + string("/") + m_imagePath;
             params["url"] = url;
 
-            sendNotify("onMotionCaptured", params);
+            std::string json;
+            const string event = "onMotionCaptured";
+
+            params.ToString(json);
+            LOGINFO("Notify %s %s", event.c_str(), json.c_str());
+            Notify(event, params);
         }
 
         /**
