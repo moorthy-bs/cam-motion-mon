@@ -90,10 +90,22 @@ namespace WPEFramework
         {
             LOGINFOMETHOD();
 
+            if(!parameters.HasLabel("ipaddress") || \
+               !parameters.HasLabel("filename") \
+              ) {
+                response["error"] = "No sufficient params given";
+                returnResponse(false);
+            }
             m_ipAddress = parameters["ipaddress"].String();
-            m_imagePath = parameters["imagepath"].String();
+            if(parameters.HasLabel("imagepath"))
+                m_imagePath = parameters["imagepath"].String();
+            m_fileName  = parameters["filename"].String();
 
-            LOGTRACEMETHODFIN();
+            if(m_ipAddress.empty() || m_fileName.empty()) {
+                response["error"] = "Invalid parameter value";
+                returnResponse(false);
+            }
+
             returnResponse(true);
         }
 
@@ -106,7 +118,11 @@ namespace WPEFramework
         {
             JsonObject params;
             
-            url = string("http://") + m_ipAddress + string("/") + m_imagePath;
+            url = string("http://") + m_ipAddress + string("/");
+            if(!m_imagePath.empty())
+                url += (m_imagePath + string("/"));
+            url += m_fileName;
+
             params["url"] = url;
 
             std::string json;

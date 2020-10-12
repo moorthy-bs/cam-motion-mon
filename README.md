@@ -10,7 +10,7 @@ A post method to send the IP address and the path where the captured image resid
 
 JSON RPC:
 
-command - { "jsonrpc":"2.0", "id":4, "method":CamMotionMonitor.1.sendPath", "params":{"ipAddress":"192.168.xx.yy", "path":"image/path", "file":"filename.jpg"}}
+command - { "jsonrpc":"2.0", "id":4, "method":CamMotionMonitor.1.sendPath", "params":{"ipaddress":"192.168.xx.yy", "imagepath":"image/path", "filename":"filename.jpg"}}
 
 response - { "jsonrpc":"2.0", "success":true}
 

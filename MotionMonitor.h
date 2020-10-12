@@ -75,6 +75,7 @@ namespace WPEFramework {
 
             std::string m_ipAddress;
             std::string m_imagePath;
+            std::string m_fileName;
         };
     } // namespace Plugin
 } // namespace WPEFramework
