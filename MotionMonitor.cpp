@@ -121,12 +121,12 @@ namespace WPEFramework
         {
             JsonObject params;
             
-            string url = string("http://") + m_ipAddress + string("/");
+            string httpurl = string("http://") + m_ipAddress + string("/");
             if(!m_imagePath.empty())
-                url += (m_imagePath + string("/"));
-            url += m_fileName;
+                httpurl += (m_imagePath + string("/"));
+            httpurl += m_fileName;
 
-            params["url"] = url;
+            params["httpurl"] = httpurl;
 
             std::string json;
             const string event = "onMotionCaptured";
