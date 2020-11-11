@@ -48,7 +48,7 @@ namespace WPEFramework {
             //End methods
 
             //Begin events
-            virtual void onMotionCaptured(std::string &url);
+            virtual void onMotionCaptured();
             //End events
 
             //Build QueryInterface implementation, specifying all possible interfaces to be returned.

@@ -107,6 +107,9 @@ namespace WPEFramework
             }
 
             returnResponse(true);
+
+            //invoke the function to notify the URL
+            onMotionCaptured();
         }
 
         /**
@@ -114,11 +117,11 @@ namespace WPEFramework
          *
          * \param url http url of the image file.
          */
-        void CamMotionMonitor::onMotionCaptured(string &url)
+        void CamMotionMonitor::onMotionCaptured()
         {
             JsonObject params;
             
-            url = string("http://") + m_ipAddress + string("/");
+            string url = string("http://") + m_ipAddress + string("/");
             if(!m_imagePath.empty())
                 url += (m_imagePath + string("/"));
             url += m_fileName;
