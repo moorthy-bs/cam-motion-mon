@@ -29,3 +29,10 @@ response - { "jsonrpc":"2.0", "success":true}
 1. onMotionCaptured
 
 A event to send across saying the motion was captured
+
+# How to test?
+
+1. copy test.html to /usr/share/WPEFramework/Controller/UI directory
+2. copy thunderjS.js file to the same directory from https://github.com/rdkcentral/ThunderJS/tree/master/dist
+3. launch http://localhost:9998/Service/Controller/UI/test.html on HTMLApp service
+4. issue the sendPath() through curl command

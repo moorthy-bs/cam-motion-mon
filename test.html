@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>JavaScript Keyboard Events: Key/Code</title>
+    <meta charset="utf-8" />
+</head>
+<body style="background-color:white;">
+    <script src="./thunderJS.js"> </script>
+    <input type="text" id="message" value="wating for event request">
+    <p id="demo"></p>
+    <img src="" id="img">
+    <script>
+        const config = { host: 'localhost', port:9998, }     
+        const fwk = ThunderJS(config)
+        console.log("thunder instance created")
+        fwk.on('CameraMotionMonitor', 'onMotionCaptured', notification => {
+            console.log("notification captured")
+            displaytext = "HTTP url is " + notification.httpurl
+            document.getElementById('img').src = notification.httpurl
+            document.getElementById('message').value = "event received"                                                 
+            document.getElementById('demo').innerHTML = displaytext
+        //TODO: show notification              
+        } )                      
+    </script>
+</body>      
+</html>
